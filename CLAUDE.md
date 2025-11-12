@@ -7,7 +7,19 @@ Analysis of 2% sample welfare atlas data (1.7M individuals, ~600K households) fr
 **Primary goal:** Understand household welfare distribution across Iran and prepare for integration with longitudinal household expenditure/consumption datasets (HEIS).
 
 **Data source:** Statistical Center of Iran welfare atlas
-**Timeline:** Data covers years 1395-1402 (2016-2024 Gregorian) with most detailed financial data from 1398-1402 (2019-2024)
+**Timeline:** Data covers years 1395-1402 (2016-2024 Gregorian) with travel data from 1395-1399 (2016-2020) and financial data from 1398-1402 (2019-2024)
+
+### Persian-Gregorian Year Conversion
+| Persian Year | Gregorian Period | Notes |
+|--------------|------------------|-------|
+| 1395 | Mar 20, 2016 - Mar 20, 2017 | Travel data start |
+| 1396 | Mar 21, 2017 - Mar 20, 2018 | |
+| 1397 | Mar 21, 2018 - Mar 20, 2019 | |
+| 1398 | Mar 21, 2019 - Mar 20, 2020 | Financial data start |
+| 1399 | Mar 21, 2020 - Mar 20, 2021 | Pandemic period |
+| 1400 | Mar 21, 2021 - Mar 20, 2022 | |
+| 1401 | Mar 21, 2022 - Mar 20, 2023 | Digital payments start |
+| 1402 | Mar 21, 2023 - Mar 19, 2024 | Dataset compilation year |
 
 ## Data Structure
 
@@ -70,18 +82,19 @@ Analysis of 2% sample welfare atlas data (1.7M individuals, ~600K households) fr
 - `IsBimePardaz`: Insurance payer
 
 #### 6. Banking/Financial Data (columns 29-44)
-**Time-series across Iranian years 1398-1402 (2019-2023)**
+**Time-series across Iranian years 1398-1402 (2019-2024)**
+**Units:** All financial variables in Rials
 
-Bank account balances:
-- `MandehAval_1399/1400`: Beginning balance
-- `MandehAkhar_1399/1400`: Ending balance
-- `Variz_1400`: Deposits in 1400
+Bank account balances (years 1399-1400):
+- `MandehAval_1399/1400`: Beginning balance (Rials)
+- `MandehAkhar_1399/1400`: Ending balance (Rials)
+- `Variz_1400`: Deposits in 1400 (Rials)
 
-Monthly payment/transaction averages:
-- `CardPerMonth_1398/1399/1400/1401/1402`: Card transactions per month
-- `CardBeCardPerMonth_1401/1402`: Card-to-card transfers per month
-- `SatnaPerMonth_1401/1402`: Satna (point-of-sale) transactions per month
-- `PayaPerMonth_1401/1402`: Paya (payment system) transactions per month
+Monthly transaction averages:
+- `CardPerMonth_1398/1399/1400/1401/1402`: Monthly card purchases (Rials)
+- `CardBeCardPerMonth_1401/1402`: Monthly card-to-card transfers, account circulation (Rials)
+- `SatnaPerMonth_1401/1402`: Monthly Satna interbank system transactions, account circulation (Rials)
+- `PayaPerMonth_1401/1402`: Monthly Paya payment system transactions, account circulation (Rials)
 
 #### 7. Assets (columns 45-47)
 - `CarsPrice`: Total car value (Rials)
@@ -89,12 +102,12 @@ Monthly payment/transaction averages:
 - `Bourse_NetPortfoValue`: Stock exchange portfolio value (Rials)
 
 #### 8. Income (column 48)
-- `Daramad`: Income (units unclear - likely annual Rials)
+- `Daramad`: Total registered income (Rials) - includes all officially recorded income sources
 
 ### Supporting Documentation
 
-**Codebook:** `data/Code- ID.xlsx` (requires R/Python to read)
-**Provincial reports:** 31 PDF files (01-WAzar.pdf through 31-Yazd.pdf, 8-14MB each)
+**Codebook:** `data/codebook.xlsx` - 48 variables with Persian descriptions and units
+**Provincial reports:** 31 PDF files in `docs/` folder (01-WAzar.pdf through 31-Yazd.pdf, 8-14MB each)
 
 ## Data Quality Assessment
 
@@ -112,9 +125,13 @@ Monthly payment/transaction averages:
    - Disability variables mostly empty
    - Financial variables sparse (many zeros and blanks)
    - Some travel variables all zeros
-3. **Codebook needs reading:** Variable definitions uncertain (e.g., units for Daramad, exact meaning of welfare programs)
-4. **Sample selection unclear:** "nemone_2_darsadi" suggests "2% sample" but of what population?
-5. **Provincial coverage:** Only 14 of 31 Iranian provinces appear in sample - need to verify if stratified sampling
+3. **Sample selection unclear:** "nemone_2_darsadi" suggests "2% sample" but of what population?
+4. **Provincial coverage:** Only 14 of 31 Iranian provinces appear in sample - need to verify if stratified sampling
+5. **Variable year coverage inconsistent:**
+   - Travel data: 1395-1399 only
+   - Bank balances: 1399-1400 only
+   - Card transactions: 1398-1402 (complete series)
+   - Digital payments (CardBeCard, Satna, Paya): 1401-1402 only
 
 ## Analysis Phases
 
@@ -122,12 +139,12 @@ Monthly payment/transaction averages:
 **Goal:** Clean data and create analysis-ready household dataset
 
 Tasks:
-1. Read codebook (`data/Code- ID.xlsx`) using R to get official variable definitions
+1. ✓ Codebook read - 48 variables verified with Persian descriptions
 2. Calculate missing data patterns by variable
 3. Verify geographic coverage (which 14 provinces? why not all 31?)
 4. Aggregate to household level using `Parent_Id`
 5. Create household composition variables (size, age structure, dependency ratio)
-6. Document data quality issues and variable definitions
+6. Document data quality issues and create analysis-ready variable dictionary
 
 **Output:**
 - `output/01_data_preparation/household_data.rds`
@@ -253,10 +270,11 @@ Tasks:
 - Address missing province data (8.3% of observations)
 
 ### Time-Series Approach
-- Financial data spans 1398-1402 (2019-2023)
+- Financial data spans 1398-1402 (2019-2024)
 - Travel data limited to 1395-1399 (2016-2020)
 - Pandemic period: 1398-1400 (March 2019 - March 2021)
-- Consider inflation adjustment for financial variables
+- Consider inflation adjustment for financial variables (all in Rials)
+- Note: Different variables have different year coverage (see Known Issues)
 
 ## Output Structure
 
@@ -305,9 +323,10 @@ scripts/
 - What population does the 2% sample represent? (all Iran? specific provinces?)
 - Are sampling weights provided or documented?
 - Why only 14 of 31 provinces? Which provinces are included?
-- What are exact units for `Daramad` (income)? Annual? Monthly?
-- Official definitions of welfare program variables?
+- ✓ Units clarified: All financial variables in Rials
+- ✓ Daramad = Total registered income (not limited to one source)
 - How to handle missing province data (8.3% of observations)?
+- Is Daramad annual or cumulative across years?
 
 **About longitudinal integration:**
 - Which HEIS waves available for matching?

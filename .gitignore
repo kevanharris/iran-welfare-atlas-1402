@@ -1,5 +1,5 @@
 # Large PDF reports (keep local only - too large for repo)
-data/*.pdf
+docs/*.pdf
 
 # R temporary files
 .Rproj.user
