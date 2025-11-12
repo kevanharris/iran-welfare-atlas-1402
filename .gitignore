@@ -1,0 +1,28 @@
+# Large PDF reports (keep local only - too large for repo)
+data/*.pdf
+
+# R temporary files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Python temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Temporary files
+*.tmp
+*.log
+*~
+
+# Output folders - commit these
+# output/ folders will be tracked
