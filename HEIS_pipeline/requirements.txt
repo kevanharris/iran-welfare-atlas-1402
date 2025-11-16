@@ -1,0 +1,14 @@
+# HEIS & LFS to Parquet Pipeline Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+hbsir>=0.6.4    # Household Expenditure & Income Survey
+lfsir>=0.6.0    # Labor Force Survey
+pandas>=2.0.0
+pyarrow>=10.0.0
+
+# Configuration
+pyyaml>=6.0
+
+# Progress tracking
+tqdm>=4.65.0

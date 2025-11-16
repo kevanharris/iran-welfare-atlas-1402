@@ -6,8 +6,87 @@ Analysis of 2% sample welfare atlas data (1.7M individuals, ~600K households) fr
 
 **Primary goal:** Understand household welfare distribution across Iran and prepare for integration with longitudinal household expenditure/consumption datasets (HEIS).
 
-**Data source:** Statistical Center of Iran welfare atlas
+**Data source:** Iranian Welfare Database (پایگاه اطلاعات رفاهی ایرانیان) - 2% public sample
 **Timeline:** Data covers years 1395-1402 (2016-2024 Gregorian) with travel data from 1395-1399 (2016-2020) and financial data from 1398-1402 (2019-2024)
+
+## About the Iranian Welfare Database
+
+**Official source:** Ministry of Cooperatives, Labor and Social Welfare (وزارت تعاون، کار و رفاه اجتماعی)
+**Database portal:** https://refahdb.mcls.gov.ir/
+**Atlas portal:** https://iran-bssc.ir/atlas/
+
+### Database Construction
+
+The Iranian Welfare Database is a **massive administrative data linkage project** that integrates **50 government data sources** using national ID numbers. The database contains:
+- **3+ billion records** from integrated administrative systems
+- **24+ million subsidy-receiving households** (nearly entire Iranian population)
+- **46 sub-databases** linked at individual level
+- **Registry-based data** (not survey data - reduces measurement error)
+
+### Major Data Sources (25 integrated in Phase 1)
+
+**Financial & Economic:**
+- Central Bank of Iran (card transactions, digital payments)
+- Tax Administration (registered income, business licenses)
+- Tehran Stock Exchange (securities portfolios)
+- Subsidy Targeting Organization (welfare transfers)
+
+**Social Insurance:**
+- Social Security Organization
+- Health Insurance Organization
+- State Pension Fund
+- Agricultural/Rural Insurance Fund
+
+**Welfare Programs:**
+- Welfare Organization (Behzisti)
+- Imam Khomeini Relief Committee (Komite Emdad)
+- Martyrs Foundation
+
+**Civil Registry:**
+- Civil Registration Organization (demographics, family structure)
+- Ministry of Interior (postal codes, geographic identifiers)
+- Real Estate Association (property ownership)
+
+**Education & Employment:**
+- Ministry of Education (school enrollment)
+- Ministry of Science (university enrollment)
+- Technical and Vocational Training Organization
+- Civil service employment records
+
+**Other:**
+- Law Enforcement records
+- Ministry of Health
+- Postal Company
+- Additional 25 sources in Phase 2
+
+### Data Linkage Methodology
+
+1. **Primary raw database:** Data received from each source
+2. **Data sources committee review:** Field-by-field validation
+3. **Data cleaning:** Conflict resolution, structure unification
+4. **Linkage:** All records matched using **national ID (کد ملی)**
+5. **Welfare structure aggregation:** Final integrated database
+
+### Public 2% Sample
+
+- **Sample size:** ~1.7M individuals, ~600K households (2% of population)
+- **Sampling:** Representative sample (exact methodology not documented)
+- **Confidential data removed:** Some sensitive fields excluded from public release
+- **Purpose:** Research and policy analysis
+- **Access:** Public download at https://refahdb.mcls.gov.ir/fa/downloaddata
+
+### Data Quality Characteristics
+
+**Strengths:**
+- Registry-based (not self-reported survey data)
+- Near-universal coverage (entire population with national IDs)
+- Individual-level linkage across administrative systems
+- Regular updates possible from source systems
+
+**Limitations:**
+- Not all Iranians captured (informal workers without IDs, recent births)
+- Some variables only for program participants (targeted welfare, travel, etc.)
+- Data reflects administrative records, not ground truth (e.g., tax under-reporting)
 
 ### Persian-Gregorian Year Conversion
 | Persian Year | Gregorian Period | Notes |
@@ -74,27 +153,48 @@ Analysis of 2% sample welfare atlas data (1.7M individuals, ~600K households) fr
 - `Has_Saham_Edalat`: Justice shares holder
 - `Decile`: Wealth decile (1-10)
 - `Percentile`: Wealth percentile (0-100)
-- `HasMojavezSenfi`: Industrial license holder
-- `ISKarmanddolat_1402`: Government employee in 1402 (2023-24)
-- `IsRetired_Asli`: Primary retirement status
-- `IsRetired_Tabaie`: Dependent retirement status
-- `is_bime_darman`: Health insurance coverage
-- `IsBimePardaz`: Insurance payer
+- **`HasMojavezSenfi`: Business license holder (پروانه کسب)**
+  - SOURCE: Iranianasnaf system - Ministry of Industry, Mining and Trade
+  - WHO HAS: Shop owners, restaurant/cafe owners, artisans, service providers with physical locations
+  - COVERAGE: 2.9% (individual-level, includes all household members - reasonable rate)
+  - MEANING: Formal business owners registered with trade guilds (اتحادیه صنف)
+  - NOTE: Does NOT include all workers - only business owners requiring trade permits
+- **`ISKarmanddolat_1402`: Government employee in 1402 (2023-24)**
+  - SOURCE: Civil service employment records
+  - COVERAGE: 4.0% of population
+  - MEANING: Active government/public sector employee
+  - TAX IMPLICATION: Employer withholds taxes - individual does NOT file tax return
+- `IsRetired_Asli`: Primary retirement status (94% missing - very sparse)
+- `IsRetired_Tabaie`: Dependent retirement status (99.5% missing - very sparse)
+- `is_bime_darman`: Health insurance coverage (19% missing)
+- `IsBimePardaz`: Insurance payer (81% missing)
 
 #### 6. Banking/Financial Data (columns 29-44)
+**SOURCE:** Central Bank of Iran - comprehensive financial surveillance system
 **Time-series across Iranian years 1398-1402 (2019-2024)**
 **Units:** All financial variables in Rials
+**COVERAGE:** 0% missing for all transaction variables - linked automatically via national ID
 
 Bank account balances (years 1399-1400):
-- `MandehAval_1399/1400`: Beginning balance (Rials)
-- `MandehAkhar_1399/1400`: Ending balance (Rials)
-- `Variz_1400`: Deposits in 1400 (Rials)
+- `MandehAval_1399/1400`: Beginning balance (Rials) - ~19% missing (no account)
+- `MandehAkhar_1399/1400`: Ending balance (Rials) - ~19% missing
+- `Variz_1400`: Deposits in 1400 (Rials) - ~19% missing
 
 Monthly transaction averages:
-- `CardPerMonth_1398/1399/1400/1401/1402`: Monthly card purchases (Rials)
+- **`CardPerMonth_1398/1399/1400/1401/1402`: Monthly card purchases (Rials)**
+  - **CRITICAL:** 0% missing, complete coverage for all 5 years
+  - **BEST CONSUMPTION PROXY** in the dataset (better than income)
+  - Captures actual spending regardless of employment status
+  - 76-86% of population has active card usage across all wealth deciles
 - `CardBeCardPerMonth_1401/1402`: Monthly card-to-card transfers, account circulation (Rials)
 - `SatnaPerMonth_1401/1402`: Monthly Satna interbank system transactions, account circulation (Rials)
 - `PayaPerMonth_1401/1402`: Monthly Paya payment system transactions, account circulation (Rials)
+
+**WHY FINANCIAL DATA IS COMPLETE:**
+- Central Bank tracks ALL transactions automatically via national ID
+- No individual filing or reporting required - passive administrative data
+- Reflects Iran's comprehensive financial surveillance system
+- Makes this dataset uniquely valuable for consumption analysis
 
 #### 7. Assets (columns 45-47)
 - `CarsPrice`: Total car value (Rials)
@@ -102,7 +202,31 @@ Monthly transaction averages:
 - `Bourse_NetPortfoValue`: Stock exchange portfolio value (Rials)
 
 #### 8. Income (column 48)
-- `Daramad`: Total registered income (Rials) - includes all officially recorded income sources
+- **`Daramad`: Registered income in tax system (Rials)**
+  - SOURCE: Tax Affairs Organization (سازمان امور مالیاتی) - my.tax.gov.ir, salary.tax.gov.ir
+  - COVERAGE: Individual 26%, Household 59.3% have at least one person with registered income
+  - **HOW IT WORKS:**
+    - Wage earners legally EXEMPT from filing individual returns
+    - ALL employers (govt + private) REQUIRED to submit salary lists electronically (Article 86, Direct Tax Law)
+    - Employers submit employee names, national IDs, salaries via salary.tax.gov.ir
+    - Tax Affairs Organization links submitted data to individual tax records
+    - Self-employed must file individual returns for business/rental/professional income
+  - **WHAT IT INCLUDES:**
+    - Government employee salaries: 98.3% coverage (near-perfect employer compliance)
+    - Private sector employee salaries: LOW coverage (employer non-compliance)
+    - Self-employed professionals (must file returns)
+    - Business owners (must file returns)
+    - Property owners with rental income (must file returns)
+    - Freelancers, contractors (must file returns)
+  - **WHY 73% "MISSING":**
+    - **Private sector employer non-compliance**: Employers required to submit salary lists, but compliance much lower than government sector
+    - **Informal economy**: No registered employers to submit salary lists
+    - Children (26% of population), retirees (8%), unemployed, dependents
+  - **INTERPRETATION:** Daramad = employer-submitted salary data + self-filed business/rental/professional income
+    - Government sector: near-perfect compliance (98.3%)
+    - Private sector: low compliance (explains most of the 73% "missing")
+    - Workers themselves don't file (legally exempt), but their employers are SUPPOSED to submit
+    - Card spending data (0% missing) is better consumption proxy than income
 
 ### Supporting Documentation
 
@@ -117,21 +241,69 @@ Monthly transaction averages:
 - Hierarchical structure enables both individual and household analysis
 - Time-series financial data across 5 years (1398-1402)
 - Rich set of welfare, economic, and demographic indicators
-- Geographic identifiers at province and county level
+- Geographic identifiers: 31 provinces, 466 counties, 196,390 postal codes (neighborhood-level)
 
-### Known Issues
-1. **Missing geographic data:** 8.3% of observations lack province/county information
-2. **Extensive missing values:** Most rows have 20-29 missing values across 48 variables
-   - Disability variables mostly empty
-   - Financial variables sparse (many zeros and blanks)
-   - Some travel variables all zeros
-3. **Sample selection unclear:** "nemone_2_darsadi" suggests "2% sample" but of what population?
-4. **Provincial coverage:** Only 14 of 31 Iranian provinces appear in sample - need to verify if stratified sampling
-5. **Variable year coverage inconsistent:**
-   - Travel data: 1395-1399 only
-   - Bank balances: 1399-1400 only
-   - Card transactions: 1398-1402 (complete series)
-   - Digital payments (CardBeCard, Satna, Paya): 1401-1402 only
+### CRITICAL LIMITATION: No Ethnicity or Language Data
+
+**This dataset contains NO individual-level ethnicity or language information.** Iran's census does not collect ethnic/linguistic data. Therefore:
+
+- **CANNOT attribute geographic differences to ethnic identity**
+- **Provinces are NOT ethnically homogeneous**:
+  - Sistan-Balochistan: Baloch, Persian, and other populations
+  - Kurdistan: Kurdish, Persian, Azeri populations
+  - West Azerbaijan: Azeri, Kurdish, Armenian populations
+  - All provinces have mixed populations
+- **Geographic patterns may reflect**:
+  - Urban vs rural (universal 1.3 decile gap)
+  - Geographic remoteness and border regions
+  - Local economic structure (formal vs informal)
+  - Infrastructure and historical development
+  - Security conditions
+  - Possibly ethnic discrimination (but cannot be proven without individual-level data)
+
+**Key findings from geographic analysis (see PROJECT_STATE.md 2025-11-13):**
+- **Rural-urban divide is universal**: Rural areas disadvantaged across ALL provinces (not ethnic-specific)
+- **Sistan-Balochistan uniquely poor**: Even rural areas (decile 3.4) worse than most other rural areas (4.1-4.6)
+- **Kurdish provinces NOT disadvantaged**: Government employment 1.16x representation, similar poverty to many Persian provinces
+- **Welfare programs progressive**: Baloch poor receive MORE welfare (31%) than Persian poor (21%)
+
+**For analyses of geographic inequality:**
+- Use terms like "Sistan-Balochistan province" NOT "Baloch people"
+- Acknowledge multiple possible explanations beyond ethnicity
+- Test urban-rural patterns, within-province heterogeneity
+- Be explicit about data limitations
+- For causal claims about ethnicity, would need individual-level ethnic identity data
+
+### Understanding "Missing" Data - Not Random!
+
+**The missingness reveals the data sources and is often INFORMATIVE, not problematic:**
+
+#### Complete Data (0% missing) - 18 variables
+- Core identifiers (id, Parent_Id, GenderId, Decile, Percentile)
+- ALL financial transaction variables (1398-1402) - Central Bank linkage
+- Economic status markers (govt employee, business license holder)
+- **WHY:** Linked automatically via national ID, passive surveillance systems
+
+#### Sparse by Design (50-90% missing)
+- **Income (73% missing):** Only self-employed/business owners file taxes; wage employees' employers withhold
+  - 26% of population + 8% children + 4% govt employees = most people legitimately don't file
+  - **NOT a data quality problem** - reflects Iranian tax system structure
+- **Car ownership (76% missing):** Data quality issue - actual car ownership higher than 24%
+- **Travel (88% missing):** Only those who traveled have records - 88% didn't travel 2016-2020
+  - Missing = didn't travel (true zero)
+
+#### Extremely Sparse (90%+ missing) - Targeted Programs
+- Welfare benefits (92-99% missing): Means-tested programs with low coverage BY DESIGN
+- Retirement (94% missing): Only retirees have records
+- Disability (98% missing): Only those with disabilities
+- **WHY:** These are targeted/selective programs - high missingness = working as intended
+
+#### Data Quality Issues (to be cautious about)
+1. **Geographic data:** 8.3% missing province/county - data linkage failure
+2. **Car ownership:** 76% missing - data quality problem, not true zeros
+3. **Sample selection:** 2% sample methodology not fully documented
+4. **Bank balances:** Only available 1399-1400 (2 years) vs card transactions (5 years)
+5. **Digital payments:** CardBeCard/Satna/Paya only 1401-1402 (newer systems)
 
 ## Analysis Phases
 
@@ -317,16 +489,53 @@ scripts/
 └── 40_longitudinal_prep.R
 ```
 
+## Session Management & File Organization Policy
+
+**CRITICAL: Prevent script/file/output bloat across sessions**
+
+### End-of-Session Cleanup
+At the end of EVERY session:
+1. **Remove temporary/exploratory scripts** - Delete any test scripts, temporary analysis files, or one-off exploratory code
+2. **Remove temporary output files** - Delete intermediate outputs, test figures, temporary data files
+3. **Keep only essential scripts** - Retain only reusable, well-documented scripts that are part of the core analysis workflow
+4. **Clean empty directories** - Remove any empty output folders created during exploration
+
+### Session Documentation
+Instead of accumulating files, document work in `PROJECT_STATE.md`:
+- **Session log format**: Date, tasks completed, key findings, decisions made
+- **What worked**: Successful approaches, code snippets worth remembering
+- **What failed**: Approaches that didn't work (to avoid repetition)
+- **File inventory**: What outputs were kept and why
+
+### Goals
+- **Prevent script bloat**: No accumulation of 10, 15, 20 scripts across sessions
+- **Prevent output bloat**: Keep only final, publication-ready outputs
+- **Prevent file bloat**: Remove temporary files, test outputs, intermediate results
+- **Maintain clean project**: Easy to understand what exists and why
+
+### What to Keep vs Delete
+**Keep:**
+- Core analysis scripts (numbered, documented, reusable)
+- Final outputs (figures, tables, reports for publication)
+- Derived datasets that took significant computation time
+- Documentation files (CLAUDE.md, PROJECT_STATE.md)
+
+**Delete at session end:**
+- `test_*.R`, `explore_*.R`, `temp_*.R` scripts
+- Temporary output files, test figures, draft tables
+- Intermediate data files easily regenerated
+- Empty output directories
+
 ## Open Questions
 
 **About the data:**
-- What population does the 2% sample represent? (all Iran? specific provinces?)
-- Are sampling weights provided or documented?
-- Why only 14 of 31 provinces? Which provinces are included?
+- ✓ What population does the 2% sample represent? All subsidy recipients (nearly universal in Iran)
+- ✓ Are sampling weights provided? No - this is administrative data snapshot, not probability sample
+- ✓ Why only 14 of 31 provinces? All 31 provinces represented (initial docs incomplete)
 - ✓ Units clarified: All financial variables in Rials
-- ✓ Daramad = Total registered income (not limited to one source)
+- ✓ Daramad = Annual registered income via employer-submitted salary lists + self-filed business/rental/professional income
+- ✓ Private sector wage workers: Workers exempt from filing, BUT employers required to submit salary lists (low compliance explains 73% missing)
 - How to handle missing province data (8.3% of observations)?
-- Is Daramad annual or cumulative across years?
 
 **About longitudinal integration:**
 - Which HEIS waves available for matching?

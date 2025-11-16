@@ -1,0 +1,49 @@
+متغیر,توضیحات
+id,شناسه
+Parent_Id,شناسه سرپرست
+Age,سن
+GenderId,جنسیت
+Dashboard_postalcode7Digits,7 رقم ابتدای کد پستی
+SabteAhval_countyname,شهرستان
+SabteAhval_provincename,استان
+isurban,شهری/روستایی
+Decile,دهک رفاهی
+Percentile,صدک رفاهی
+Has_SoeTaghzie,آیا سو تغذیه دارد
+Has_Saham_Edalat,دارای سهام عدالت
+HasMojavezSenfi,دارای مجوز صنفی
+ISBimarKhas,آیا بیماری خاص دارد؟
+IsMalool,آیا معلولیت دارد؟
+Malool_shedat,شدت معلولیت
+IsBehzisti_AfzayeshMostamari,آیا تحت پوشش بهزیستی است؟
+IsKomite_AfzayeshMostamari,آیا تحت پوشش کمیته امداداست؟
+IsKomite_AfzayeshMostamariSayer,آیا تحت پوشش کمیته امداداست؟
+is_bime_darman,دارای بیمه درمان
+IsBimePardaz,بیمه پرداز
+ISKarmanddolat_1402,کارمند دولت
+IsRetired_Asli,بازنشسته اصلی
+IsRetired_Tabaie,بازنشسته تبعی
+TripCountAirNonPilgrimage_95to99,تعداد سفر های هوایی غیر زیارتی از 95 الی 99
+TripCountAirPilgrimage_95to99,تعداد سفر های هوایی زیارتی از 95 تا99
+TripCountNonAirNonPilgrimage_95to99,تعداد سفر های غیر زیارتی غیر هوایی 95 الی 99
+TripCountNonAirPilgrimage_95to99,تعداد سفر های غیر هوایی زیارتی 95 الی 99
+CardPerMonth_1398,خرید کارت ماهانه سال 1398 (ریال)
+CardPerMonth_1399,خرید کارت ماهانه سال 1399 (ریال)
+CardPerMonth_1400,خرید کارت ماهانه سال 1400 (ریال)
+CardPerMonth_1401,خرید کارت ماهانه سال 1401 (ریال)
+CardPerMonth_1402,خرید کارت ماهانه سال 1402 (ریال)
+CardBeCardPerMonth_1401,گردش حساب-کارت به کارت ماهانه 1401 (ریال)
+CardBeCardPerMonth_1402,گردش حساب-کارت به کارت ماهانه 1402 (ریال)
+PayaPerMonth_1401,گردش حساب-پایا ماهیانه 1401 (ریال)
+PayaPerMonth_1402,گردش حساب-پایا  ماهیانه 1402 (ریال)
+SatnaPerMonth_1401,گردش حساب-ساتنا ماهیانه 1401 (ریال)
+SatnaPerMonth_1402,گردش حساب-ساتنا ماهیانه 1402 (ریال)
+CarsCount,تعداد خودرو
+CarsPrice,ارزش خودرو (ریال)
+Daramad,مجموع درآمد های ثبتی (ریال)
+Bourse_NetPortfoValue,ازرش پورتفوی بورسی (ریال)
+Variz_1400,واریز سال 1400 (ریال)
+MandehAkhar_1399,مانده انتهای سال 1399 (ریال)
+MandehAkhar_1400,مانده انتهای سال 1400 (ریال)
+MandehAval_1399,مانده ابتدای سال 1399 (ریال)
+MandehAval_1400,مانده ابتدای سال 1400 (ریال)

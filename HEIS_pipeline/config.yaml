@@ -1,0 +1,56 @@
+# HEIS to Parquet Pipeline Configuration
+# Edit these paths and settings as needed
+
+# Output directory for cleaned Parquet files
+parquet_out_dir: "/Users/kevanharris/Library/CloudStorage/Dropbox/05_Data/Iran Primary Data/Household Budget Surveys/parquet"
+
+# Temporary cache directory for HBSIR downloads (can be deleted after conversion)
+hbsir_cache_dir: "/tmp/hbsir_cache"
+
+# Year range to process (inclusive)
+years:
+  start: 1375
+  end: 1403
+
+# Tables to download and convert
+# General tables
+general_tables:
+  - household_information
+  - members_properties
+
+# Expenditure tables (all categories)
+expenditure_tables:
+  - food
+  - tobacco
+  - cloth
+  - home
+  - furniture
+  - medical
+  - transportation
+  - communication
+  - entertainment
+  - education
+  - hotel
+  - miscellaneous
+  - durable
+
+# Income tables
+income_tables:
+  - employment_income
+  - self_employed_income
+  - other_income
+  - subsidy
+
+# Processing options
+options:
+  # Add sampling weights to household_information table
+  add_weights: true
+
+  # Parquet compression (snappy, gzip, or None)
+  compression: "snappy"
+
+  # Show progress bars
+  show_progress: true
+
+  # Skip existing files (set to false to overwrite)
+  skip_existing: true

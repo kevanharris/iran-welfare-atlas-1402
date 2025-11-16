@@ -1,0 +1,23 @@
+# LFS to Parquet Pipeline Configuration
+
+# Output directory for cleaned Parquet files
+parquet_out_dir: "/Users/kevanharris/Library/CloudStorage/Dropbox/05_Data/Iran Primary Data/Labor Force Surveys/parquet"
+
+# Temporary cache directory for LFSIR downloads
+lfsir_cache_dir: "/tmp/lfsir_cache"
+
+# Year range to process (inclusive)
+years:
+  start: 1385
+  end: 1403
+
+# Processing options
+options:
+  # Parquet compression (snappy, gzip, or None)
+  compression: "snappy"
+
+  # Show progress bars
+  show_progress: true
+
+  # Skip existing files (set to false to overwrite)
+  skip_existing: true

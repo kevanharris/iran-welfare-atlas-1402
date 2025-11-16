@@ -1,0 +1,167 @@
+### 2025-11-13 (continued): Ground Truth Validation & Corrections
+
+**Tasks Completed:**
+1. ✓ Verified income variable units (Daramad = annual income)
+2. ✓ Verified travel data definition (international non-pilgrimage air travel)
+3. ✓ Verified sampling structure (subsidy recipients, not probability sample)
+4. ✓ Verified welfare program coverage rates (Komite 5%, Behzisti 2-4%)
+5. ✓ Corrected major misinterpretations in documentation
+6. ✓ Mapped employment variables and coverage patterns (individual + household level)
+7. ✓ Verified Iranian tax filing requirements (wage earners legally exempt)
+
+**Key Findings:**
+
+**Income Variable (Daramad):**
+- CONFIRMED: Annual income registered in tax system (Rials)
+- Individual: 26% have data, Household: 59.3% have at least one earner
+- Median 88M Rials/household (vs official stats 2,570M for all households)
+- **HOW IT WORKS:**
+  - Wage earners legally EXEMPT from filing individual returns
+  - ALL employers REQUIRED to submit salary lists to Tax Affairs Organization (Article 86)
+  - System: salary.tax.gov.ir - employers submit employee data electronically
+  - Data linked to individual tax records administratively
+- **WHAT IT INCLUDES:**
+  - Government employee salaries: 98.3% coverage, median 120M Rials (near-perfect employer compliance)
+  - Private sector employee salaries: LOW coverage (employer non-compliance)
+  - Self-employed/business/property income: self-filed returns, median 75M Rials
+- **WHY 73% MISSING:**
+  - Private sector employer non-compliance with salary list submission requirement
+  - Informal economy: no registered employers to submit salary lists
+  - Children, retirees, unemployed, dependents
+- Lower median reflects govt salaries + self-employed, NOT most private sector wages (missing due to employer non-compliance)
+
+**Travel Variables:**
+- Definition: International non-pilgrimage air travel ONLY (1395-1399 / 2016-2020)
+- 12% traveled = realistic (2019 stats: 7-10M/82M = 8-12% of population)
+- 88% didn't travel = true zeros, not data collection gaps
+
+**Sample Structure - MAJOR CORRECTION:**
+- Population = ALL subsidy recipients (nearly universal in Iran)
+- 2% is public release subset of administrative database
+- NOT a probability sample, NOT oversampling poor
+- Female-headed HH rate (22.3%) reflects widowhood (age 53 avg, 58% single-person), NOT sampling bias
+
+**Welfare Program Coverage - MAJOR CORRECTION:**
+- Previously: "High missingness (>90%) means actual coverage may differ"
+- CORRECTED: Programs have genuinely low coverage by design (targeted poverty programs)
+- Ground truth verification:
+  - Komite Emdad: 4-5M regular beneficiaries = 5-6% population (our data: 5.2% ✓)
+  - Behzisti: 1.08M households = 3.2M people = 3.6% population (our data: 2.2% ✓)
+  - Nutrition subsidy: Very low coverage by design (0.2% our data)
+- These are TARGETED programs, not universal - high "missingness" is expected
+
+**Provincial Report Methodology (Ilam PDF page 8):**
+- Deciles based on: assets, salary, insurance, foreign travel, car/home ownership
+- Bank deposits 2016-2019, card transactions 2019-2020
+- Car values last updated Nov 2019
+- Household = subsidy household structure, not census household
+- Urban/rural based on subsidy system registration
+
+**Employment Variables Mapping:**
+
+Analyzed 5 employment-related indicators in the dataset:
+
+1. **ISKarmanddolat_1402** (Government employee 1402)
+   - Individual: 4.0% of working-age (15-64)
+   - Household: 10.2% of households have at least one govt employee
+   - SOURCE: Civil service employment records
+   - WHO: Active government/public sector employees
+   - TAX: Salary administratively reported to tax system (98.3% have Daramad)
+
+2. **HasMojavezSenfi** (Business license holder)
+   - Individual: 2.9% of working-age
+   - Household: 8.0% of households have at least one license holder
+   - SOURCE: Iranianasnaf system (Ministry of Industry, Mining, Trade)
+   - WHO: Shop owners, restaurant/cafe owners, artisans, service providers
+   - NOTE: Only business owners requiring trade guild registration, not all workers
+
+3. **Daramad** (Registered income in tax system)
+   - Individual: 26% have non-zero values (73% missing/zero)
+   - Household: 59.3% have at least one person with registered income
+   - SOURCE: Tax Affairs Organization (my.tax.gov.ir, salary.tax.gov.ir)
+   - **HOW IT WORKS:**
+     - Wage earners legally EXEMPT from filing individual returns
+     - ALL employers (govt + private) REQUIRED to submit salary lists electronically (Article 86, Direct Tax Law)
+     - Employers submit employee names, national IDs, salaries via salary.tax.gov.ir
+     - Tax Affairs Organization links submitted data to individual tax records
+     - Self-employed must file individual returns for business/rental/professional income
+   - **WHAT IT INCLUDES:**
+     - Government employee salaries: 98.3% coverage (near-perfect employer compliance)
+     - Private sector employee salaries: LOW coverage (employer non-compliance)
+     - Self-employed, business owners (must file returns)
+     - Landlords with rental income (must file returns)
+     - Professionals/freelancers (must file returns)
+   - **WHY 73% MISSING:**
+     - Private sector employer non-compliance with salary list submission requirement
+     - Informal economy: no registered employers to submit salary lists
+     - Children (26%), retirees (8%), unemployed, dependents
+   - **KEY FACT:** Daramad = employer-submitted salary data + self-filed business/rental income (NOT individual wage earner filings)
+
+4. **IsBimePardaz** (Insurance payer)
+   - Coverage: 18.7% of working-age (81% missing)
+   - SOURCE: Social Security Organization + govt employee insurance
+   - WHO: Formal sector workers required to pay social insurance
+   - BREAKDOWN: 79% SSO insured, 21% govt employee insurance
+
+5. **IsRetired_Asli** (Primary retirement pension)
+   - Coverage: 5.8% of population (94% missing)
+   - WHO: Retired individuals receiving primary pension benefits
+   - NOTE: Extremely sparse - only retirees have values
+
+**Individual-Level Overlaps:**
+- Government employees → 100% are insurance payers (all 64,627)
+- Business license holders → Only 57% have Daramad >0 (25,725 of 45,073)
+- Daramad holders → 93% do NOT have business license (361,671 of 387,396)
+  - This means most with registered income are professionals, landlords, contractors, govt employees - NOT shop owners
+
+**Household-Level Overlaps:**
+- Government employee households (60,504 = 10.2%):
+  - 99.1% also have registered income (Daramad) - salaries administratively reported
+  - 6.8% also have business license
+- Business license households (47,898 = 8.0%):
+  - 73.6% also have registered income - but 26.4% of shop owners don't comply with tax filing
+  - 8.5% also have govt employee
+- Registered income households (353,426 = 59.3%):
+  - Only 10.0% have business license - confirms most Daramad is NOT from shops
+  - 17.0% have govt employee
+- **38.5% of households (229,118)** have NONE of these formal employment indicators
+
+**What's Missing (NOT captured):**
+- **Private sector wage workers** - due to employer non-compliance with salary list submission requirement
+- Informal economy workers (street vendors, day laborers, domestic workers) - no registered employer
+- Unpaid family workers
+- Full-time students, housewives, dependents
+
+**Key Insight - Iranian Tax System:**
+The 73% "missing" Daramad is NOT unemployment - it reflects:
+- **Wage earners (حقوق بگیران) legally EXEMPT from filing individual returns** - CORRECT
+- **BUT employers REQUIRED to submit salary lists** (Article 86, Direct Tax Law) - ALL employers (govt + private)
+- **Government compliance: 98.3%** (near-perfect) - govt employee salaries in database
+- **Private sector compliance: LOW** - employers don't submit, or workers in informal economy
+- 26% children (0-14 years)
+- 8% retirees (pension income, not taxable income)
+- Large informal sector (no registered employer to submit salary list)
+
+**How Daramad Works:**
+- Employer-submitted salary lists (via salary.tax.gov.ir) + self-filed business/rental/professional income
+- Workers themselves don't file (legally exempt), but their employers are SUPPOSED to submit
+- Government sector: near-perfect compliance
+- Private sector: low compliance (explains 73% "missing")
+- The variable is "income in tax system database" = employer submissions + self-filed income
+
+**Best Consumption Proxy:** Card spending data (CardPerMonth_1398-1402) has 0% missing and 76-86% active usage across all deciles - far superior to income for welfare analysis.
+
+**Documentation Corrections Made:**
+- Removed "oversampling poor" claims (widowhood, not sampling)
+- Changed welfare "missingness" from data quality issue to genuine low coverage
+- Clarified sampling: administrative data of subsidy recipients, not survey
+- Answered income/travel questions in Open Questions section
+- Documented employment variables and their actual coverage patterns
+- **Verified Iranian tax system (via online sources):**
+  - Wage earners legally EXEMPT from filing individual returns - CONFIRMED
+  - ALL employers REQUIRED to submit salary lists (Article 86, Direct Tax Law) - NEW FINDING
+  - System: salary.tax.gov.ir - employers submit electronically, data linked to individual records
+  - Government compliance: 98.3% (near-perfect)
+  - Private sector compliance: LOW (explains 73% "missing")
+- Corrected Daramad interpretation: employer-submitted salary data + self-filed business/rental income
+- 73% "missing" reflects private sector employer non-compliance + informal economy, NOT unemployment

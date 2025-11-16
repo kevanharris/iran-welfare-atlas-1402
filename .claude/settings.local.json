@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(head:*)",
+      "Bash(wc:*)",
+      "Bash(tail:*)",
+      "Bash(cut:*)",
+      "Bash(md5:*)",
+      "Bash(git init:*)",
+      "Bash(git lfs:*)",
+      "Bash(brew install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial setup: Iranian Welfare Atlas 1402 project\n\n- Add project documentation (CLAUDE.md)\n- Configure Git LFS for large CSV file (338MB)\n- Add codebook (Code-ID.xlsx)\n- Exclude provincial PDF reports from version control\n\nData: 1.7M individuals from 2% welfare sample\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(gh repo create:*)",
+      "Bash(gh auth:*)",
+      "Bash(Rscript:*)",
+      "Bash(python3:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(gh repo view:*)",
+      "WebSearch",
+      "WebFetch(domain:iran-bssc.ir)",
+      "WebFetch(domain:d-learn.ir)",
+      "WebFetch(domain:irstat.ir)",
+      "WebFetch(domain:documents1.worldbank.org)",
+      "WebFetch(domain:en.radiozamaneh.com)",
+      "Bash(pip3 install:*)",
+      "WebFetch(domain:www.kar-tamin.ir)",
+      "WebFetch(domain:persianhesab.com)",
+      "WebFetch(domain:www.sepidarsystem.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:ccusage.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
